@@ -2,7 +2,7 @@ CC			=	cc
 RM			=	rm -rf
 CFLAGS		=	-Wall -Wextra -Werror -I
 
-NAME		=	pipex
+NAME		=	../pipex
 
 SRCS		=	err_handling.c ft_pipex.c helpers.c split.c strings.c
 
@@ -15,7 +15,7 @@ INCLUDES	=	$(addprefix $(INC_DIR),pipex.h)
 all:	$(NAME) $(INCLUDES)
 
 $(NAME): $(OBJCTS)
-	$(CC) $(CFLAGS) $(INC_DIR) $^ -o ../$@
+	$(CC) $(CFLAGS) $(INC_DIR) $^ -o $@
 	@echo "mandatory pipex is ready."
 
 $(OBJ_DIR)%.o:	%.c ${INCLUDES}

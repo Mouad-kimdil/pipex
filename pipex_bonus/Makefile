@@ -2,9 +2,9 @@ CC			=	cc
 RM			=	rm -rf
 CFLAGS		=	-Wall -Wextra -Werror -I
 
-NAME		=	pipex
+NAME		=	../pipex
 
-SRCS		=	ft_pipex_bonus_bonus.c helpers_bonus.c strings_bonus.c \
+SRCS		=	pipex_bonus.c helpers_bonus.c strings_bonus.c \
 				err_handling_bonus.c get_next_line_bonus.c helpers2_bonus.c \
 				err_handling2_bonus.c get_next_line_utils_bonus.c split_bonus.c
 
@@ -17,9 +17,9 @@ INCLUDES	=	$(addprefix $(INC_DIR),pipex_bonus.h)
 bonus:	$(NAME) $(INCLUDES)
 
 $(NAME):	$(OBJCTS)
-	$(CC) $(CFLAGS) $(INC_DIR) $^ -o ../$@
+	$(CC) $(CFLAGS) $(INC_DIR) $^ -o $@
 	@echo "bonus pipex is ready."
 
-$(OBJ_DIR)%.o:	%.c
+$(OBJ_DIR)%.o:	%.c ${INCLUDES}
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@

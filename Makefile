@@ -1,4 +1,6 @@
 NAME	=	pipex
+INC_DIR		=	../headers/
+INCLUDES	=	$(addprefix $(INC_DIR),pipex.h)
 
 all:
 	@make -C pipex_mandatory
