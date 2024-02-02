@@ -15,9 +15,9 @@ INCLUDES	=	$(addprefix $(INC_DIR),pipex.h)
 all:	$(NAME) $(INCLUDES)
 
 $(NAME): $(OBJCTS)
-	@$(CC) $(CFLAGS) $(INC_DIR) $^ -o ../$@
+	$(CC) $(CFLAGS) $(INC_DIR) $^ -o ../$@
 	@echo "mandatory pipex is ready."
 
 $(OBJ_DIR)%.o:	%.c ${INCLUDES}
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC_DIR) -c $< -o $@
