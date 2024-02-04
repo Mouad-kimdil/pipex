@@ -10,3 +10,5 @@ The primary objective of Pipex is to create a program that mimics the behavior o
 ```shell
 $> < file1 cmd1 | cmd2 > file2
 ```
+
+This command takes four arguments: file1 and file2 as file names, and cmd1 and cmd2 as shell commands along with their parameters. The program is expected to replicate the functionality of the provided shell command.
