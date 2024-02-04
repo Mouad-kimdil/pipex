@@ -58,3 +58,13 @@ void	child(t_pipex p, char **av, char **env)
 			err_msg("execve error");
 	}
 }
+
+void	intialize_vars(t_pipex *pipex, int ac, char **env)
+{
+	pipex->cmd_nmbs = ac - 3 - pipex->here_doc;
+	pipex->pipe_nmbs = 2 * (pipex->cmd_nmbs - 1);
+	pipex->pipe = (int *)malloc(sizeof(int) * pipex->pipe_nmbs);
+	pipex->env_path = findpath(env);
+	pipex->cmd_paths = ft_split(pipex->env_path, ':');
+	pipex->idx = -1;
+}

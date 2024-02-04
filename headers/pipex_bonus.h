@@ -58,7 +58,7 @@ void	creat_pipes(t_pipex *pipex);
 void	free_all(t_pipex *pipex);
 void	close_pipes(t_pipex *pipex);
 void	child_free(t_pipex *pipex);
-void	err_msg2(char *s, char *cmd);
+void	err_msg2(char *s, char *cmd, char *s2);
 void	free_array(char **arr);
 void	sub_dup2(int fd1, int fd2);
 void	main_free(t_pipex *pipex);
@@ -72,5 +72,6 @@ char	*get_next_line(int fd);
 char	*ft_strrchr(char *str, int c);
 void	*ft_calloc(size_t count, size_t size);
 void	here_doc(char *delimiter, t_pipex *pipex);
+void	intialize_vars(t_pipex *pipex, int ac, char **env);
 
 #endif

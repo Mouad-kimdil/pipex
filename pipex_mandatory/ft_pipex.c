@@ -87,6 +87,8 @@ int	main(int ac, char *av[], char **env)
 		ft_putstr("Usage: ./pipex [infile] [cmd1] [cmd2] [outfile]\n", 2);
 		exit(EXIT_FAILURE);
 	}
+	if (ft_strncmp(av[2], "", 2) == 0 || ft_strncmp(av[3], "", 2) == 0)
+		ft_putstr("Command '' not found\n", 2);
 	ft_pipex(av, env);
 	return (EXIT_SUCCESS);
 }

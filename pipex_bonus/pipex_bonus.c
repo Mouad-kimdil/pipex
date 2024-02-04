@@ -20,19 +20,18 @@ int	main(int ac, char **av, char **env)
 		err_msg3(pipex);
 	get_infile(av, &pipex);
 	get_outfile(av, ac, &pipex);
-	pipex.cmd_nmbs = ac - 3 - pipex.here_doc;
-	pipex.pipe_nmbs = 2 * (pipex.cmd_nmbs - 1);
-	pipex.pipe = (int *)malloc(sizeof(int) * pipex.pipe_nmbs);
+	intialize_vars(&pipex, ac, env);
 	if (!pipex.pipe)
 		err_msg("pipe err");
-	pipex.env_path = findpath(env);
-	pipex.cmd_paths = ft_split(pipex.env_path, ':');
 	if (!pipex.cmd_paths)
 		main_free(&pipex);
 	creat_pipes(&pipex);
-	pipex.idx = -1;
 	while (++pipex.idx < pipex.cmd_nmbs)
+	{
+		if (ft_strncmp(av[1 + pipex.idx + pipex.here_doc], "", 2) == 0)
+			err_msg2("Command ", "''", " not found\n");
 		child(pipex, av, env);
+	}
 	close_pipes(&pipex);
 	while (wait(NULL) != -1)
 		;

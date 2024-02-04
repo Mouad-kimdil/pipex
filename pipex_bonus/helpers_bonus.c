@@ -27,7 +27,7 @@ void	get_infile(char **av, t_pipex *pipex)
 	{
 		pipex->infile = open(av[1], O_RDONLY, 0644);
 		if (pipex->infile < 0)
-			err_msg("open");
+			err_msg2("bash: ", av[1], ": No such file or directory\n");
 	}
 }
 
@@ -51,7 +51,7 @@ char	*check_access(char **path, char *cmd)
 	{
 		temp = ft_split(cmd, '/');
 		if (temp[1] == NULL)
-			return (err_msg2("zsh: no such file or directory: ", cmd)
+			return (err_msg2("bash: ", cmd, ": No such file or directory")
 				, free_array(temp), NULL);
 		if (access(cmd, X_OK) == 0)
 			return (cmd);

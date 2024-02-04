@@ -32,11 +32,11 @@ void	child_free(t_pipex *pipex)
 	free(pipex->cmd);
 }
 
-void	err_msg2(char *s, char *cmd)
+void	err_msg2(char *s, char *cmd, char *s2)
 {
 	ft_putstr(s, 2);
 	ft_putstr(cmd, 2);
-	ft_putstr("\n", 2);
+	ft_putstr(s2, 2);
 	exit(EXIT_FAILURE);
 }
 

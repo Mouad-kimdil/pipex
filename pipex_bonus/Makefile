@@ -1,6 +1,6 @@
 CC			=	cc
 RM			=	rm -rf
-CFLAGS		=	-Wall -Wextra -Werror -I
+CFLAGS		=	-Wall -Wextra -Werror -I 
 
 NAME		=	../pipex
 
