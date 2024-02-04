@@ -28,7 +28,7 @@ int		ft_strlen(char *str);
 char	*ft_strjoin(char *s1, char *s2);
 char	*findpath(char **env);
 void	ft_putstr(char *str, int fd);
-int		err_exit(char *s, char *cmd, char **args);
+int		err_exit(char *s, char *cmd, char **args, int msg);
 void	free_array(char **str);
 void	fatal(char *msg);
 char	*check_access(char **path, char *cmd);

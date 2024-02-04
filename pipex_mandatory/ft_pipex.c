@@ -24,13 +24,13 @@ void	child(int *fds, char **av, char **env)
 	path = check_access(tmp, args[0]);
 	free_array(tmp);
 	if (!path)
-		err_exit("zsh: command not found: ", args[0], args);
+		err_exit(": command not found\n", args[0], args, 0);
 	fd = open(av[4], O_RDWR | O_CREAT, 0666);
 	if (fd == -1)
-		err_exit("zsh: no such file or directory: ", av[4], args);
+		err_exit("bash: ", av[4], args, 1);
 	sub_dup2(fds, fd, 1);
 	if (execve(path, args, env) == -1)
-		err_exit("zsh: command not found: ", args[0], args);
+		err_exit(": command not found\n", args[0], args, 0);
 	exit(EXIT_FAILURE);
 }
 
@@ -46,13 +46,13 @@ void	parent(int *fds, char **av, char **env)
 	path = check_access(tmp, args[0]);
 	free_array(tmp);
 	if (!path)
-		err_exit("zsh: command not found: ", args[0], args);
+		err_exit(": command not found\n", args[0], args, 0);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
-		err_exit("zsh: no such file or directory: ", av[1], args);
+		err_exit("bash: ", av[1], args, 1);
 	sub_dup2(fds, fd, 0);
 	if (execve(path, args, env) == -1)
-		err_exit("zsh: command not found: ", args[0], args);
+		err_exit(": command not found\n", args[0], args, 0);
 	exit(EXIT_FAILURE);
 }
 
@@ -66,16 +66,16 @@ void	ft_pipex(char **av, char **env)
 		fatal("pipe");
 	pid1 = fork();
 	if (pid1 == -1)
-		fatal("fork_1");
+		fatal("fork");
 	if (pid1 == 0)
 		child(fds, av, env);
 	pid2 = fork();
 	if (pid2 == -1)
-		fatal("fork_2");
+		fatal("fork");
 	if (pid2 == 0)
 		parent(fds, av, env);
 	if (close(fds[0]) == -1 || close(fds[1]) == -1)
-		fatal("close 7");
+		fatal("close");
 	while (wait(NULL) != -1)
 		;
 }

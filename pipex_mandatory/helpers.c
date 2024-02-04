@@ -55,9 +55,9 @@ void	sub_dup2(int *fds, int fd, int state)
 	{
 		close(fds[1]);
 		if (dup2(fd, 1) == -1)
-			fatal("dup 1");
+			fatal("dup 3");
 		if (dup2(fds[0], 0) == -1)
-			fatal("dup 2");
+			fatal("dup 4");
 		if (close(fd) == -1 || close(fds[0]) == -1)
 			fatal("close");
 	}

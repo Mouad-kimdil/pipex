@@ -12,12 +12,21 @@
 
 #include "pipex.h"
 
-int	err_exit(char *s, char *cmd, char **args)
+int	err_exit(char *s, char *cmd, char **args, int msg)
 {
-	ft_putstr(s, 2);
-	ft_putstr(cmd, 2);
-	write(2, "\n", 1);
-	free_array(args);
+	if (msg == 1)
+	{
+		ft_putstr(s, 2);
+		ft_putstr(cmd, 2);
+		ft_putstr(": No such file or directory\n", 2);
+		free_array(args);
+	}
+	else if (msg == 0)
+	{
+		ft_putstr(cmd, 2);
+		ft_putstr(s, 2);
+		free_array(args);
+	}
 	exit(EXIT_FAILURE);
 }
 
