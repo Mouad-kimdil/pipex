@@ -112,3 +112,7 @@ make
 ```bash
 make bonus
 ```
+
+## Contributors
+
+Feel free to contribute and submit pull requests.
