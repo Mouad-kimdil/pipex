@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   helpers.c                                          :+:      :+:    :+:   */
+/*   helpers_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 18:17:56 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/01/14 16:01:39 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/18 15:47:23 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,12 @@ void	here_doc(char *delimiter, t_pipex *pipex)
 	fd = open("heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 		err_msg("open");
-	if (delimiter[0] == '\0')
-		delimiter = ft_strndup("\n", 1);
 	while (1)
 	{
 		write(1, ">> ", 2);
 		tmp = get_next_line(0);
-		if (ft_strncmp(tmp, delimiter, ft_strlen(delimiter)) == 0)
+		if (!tmp || ((ft_strncmp(tmp, delimiter, ft_strlen(delimiter)) == 0)
+				&& (ft_strlen(tmp) - 1 == ft_strlen(delimiter))))
 			break ;
 		write(fd, tmp, ft_strlen(tmp));
 		free(tmp);
