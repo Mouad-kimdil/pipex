@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 02:17:50 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/18 15:48:10 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/19 06:23:16 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	child(int *fds, char **av, char **env)
 	free_array(tmp);
 	if (!path)
 		err_exit(": command not found\n", args[0], args, 0);
-	fd = open(av[4], O_RDWR | O_CREAT, 0666);
+	fd = open(av[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		err_exit("bash: ", av[4], args, 1);
 	sub_dup2(fds, fd, 1);
@@ -47,7 +47,7 @@ void	parent(int *fds, char **av, char **env)
 	free_array(tmp);
 	if (!path)
 		err_exit(": command not found\n", args[0], args, 0);
-	fd = open(av[1], O_RDONLY);
+	fd = open(av[1], O_RDONLY, 0644);
 	if (fd == -1)
 		err_exit("bash: ", av[1], args, 1);
 	sub_dup2(fds, fd, 0);

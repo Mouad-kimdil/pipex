@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:14:59 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/01/08 18:01:11 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/19 06:23:59 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*check_access(char **path, char *cmd)
 	char	*full_cmd;
 	char	**temp;
 
-	if (*cmd == '/')
+	if (*cmd == '/' || *cmd == '.')
 	{
 		temp = ft_split(cmd, '/');
 		if (temp[1] == NULL)
