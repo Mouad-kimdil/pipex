@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 05:40:47 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/18 18:03:50 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/22 06:08:16 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ void	free_array(char **str)
 
 void	fatal(char *msg)
 {
-	perror(msg);
+	ft_putstr(msg, 2);
 	exit(EXIT_FAILURE);
 }

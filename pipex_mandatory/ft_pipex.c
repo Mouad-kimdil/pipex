@@ -6,13 +6,13 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 02:17:50 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/19 06:23:16 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/22 06:11:26 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	child(int *fds, char **av, char **env)
+static void	child_1(int *fds, char **av, char **env)
 {
 	int		fd;
 	char	**tmp;
@@ -20,6 +20,8 @@ void	child(int *fds, char **av, char **env)
 	char	**args;
 
 	args = ft_split(av[3], ' ');
+	if (!args[0])
+		fatal("command not found");
 	tmp = ft_split(findpath(env), ':');
 	path = check_access(tmp, args[0]);
 	free_array(tmp);
@@ -34,7 +36,7 @@ void	child(int *fds, char **av, char **env)
 	exit(EXIT_FAILURE);
 }
 
-void	parent(int *fds, char **av, char **env)
+static void	child_2(int *fds, char **av, char **env)
 {
 	int		fd;
 	char	**tmp;
@@ -42,8 +44,12 @@ void	parent(int *fds, char **av, char **env)
 	char	*path;
 
 	args = ft_split(av[2], ' ');
+	if (!args[0])
+		fatal("command not found");
 	tmp = ft_split(findpath(env), ':');
 	path = check_access(tmp, args[0]);
+	if (!path)
+		err_exit(": command not found\n", args[0], args, 0);
 	free_array(tmp);
 	if (!path)
 		err_exit(": command not found\n", args[0], args, 0);
@@ -56,39 +62,39 @@ void	parent(int *fds, char **av, char **env)
 	exit(EXIT_FAILURE);
 }
 
-void	ft_pipex(char **av, char **env)
+static void	ft_pipex(char **av, char **env, int *state)
 {
 	int	fds[2];
 	int	pid1;
 	int	pid2;
-
 	if (pipe(fds) == -1)
 		fatal("pipe");
 	pid1 = fork();
 	if (pid1 == -1)
 		fatal("fork");
 	if (pid1 == 0)
-		child(fds, av, env);
+		child_1(fds, av, env);
 	pid2 = fork();
 	if (pid2 == -1)
 		fatal("fork");
 	if (pid2 == 0)
-		parent(fds, av, env);
+		child_2(fds, av, env);
 	if (close(fds[0]) == -1 || close(fds[1]) == -1)
 		fatal("close");
-	while (wait(NULL) != -1)
-		;
+	waitpid(pid2, state, 0);
+	exit(*state);
 }
 
 int	main(int ac, char *av[], char **env)
 {
-	if (ac != 5)
+	int	state;
+
+	if (ac != 5 || !env || !*env)
 	{
 		ft_putstr("Usage: ./pipex [infile] [cmd1] [cmd2] [outfile]\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	if (ft_strncmp(av[2], "", 2) == 0 || ft_strncmp(av[3], "", 2) == 0)
-		ft_putstr("Command '' not found\n", 2);
-	ft_pipex(av, env);
-	return (EXIT_SUCCESS);
+	state = 0;
+	ft_pipex(av, env, &state);
+	exit(state);
 }

@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:14:59 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/19 06:23:59 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/22 06:00:10 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	sub_dup2(int *fds, int fd, int state)
 
 char	*findpath(char **env)
 {
-	while (ft_strncmp("PATH", *env, 4))
+	while (ft_strncmp("PATH", *env, 4) != 0)
 		env++;
 	return (*env + 5);
 }
