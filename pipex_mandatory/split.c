@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:12:48 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/19 06:54:41 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:46:31 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,25 @@
 int	countword(const char *s, char c)
 {
 	int	count;
+	int	in_word;
 
 	count = 0;
+	in_word = 0;
 	if (!s)
 		return (0);
 	while (*s)
 	{
 		if (*s != c && *s != '\t')
 		{
-			count++;
-			while (*s && (*s != c && *s != '\t'))
-				s++;
+			if (!in_word)
+			{
+				in_word = 1;
+				count++;
+			}
 		}
 		else
-			s++;
+			in_word = 0;
+		s++;
 	}
 	return (count);
 }

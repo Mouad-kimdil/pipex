@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 02:17:50 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/28 03:42:15 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:57:03 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ static void	child_1(int *fds, char **av, char **env)
 	char	**tmp;
 	char	*path;
 	char	**args;
+	char	*temp;
 
 	args = ft_split(av[3], ' ');
 	if (!args[0])
 		fatal("command not found");
-	tmp = ft_split(findpath(env), ':');
+	temp = findpath(env);
+	tmp = ft_split(temp, ':');
 	path = check_access(tmp, args[0]);
 	free_array(tmp);
 	if (!path)
@@ -42,11 +44,13 @@ static void	child_2(int *fds, char **av, char **env)
 	char	**tmp;
 	char	**args;
 	char	*path;
+	char	*temp;
 
 	args = ft_split(av[2], ' ');
 	if (!args[0])
 		fatal("command not found");
-	tmp = ft_split(findpath(env), ':');
+	temp = findpath(env);
+	tmp = ft_split(temp, ':');
 	path = check_access(tmp, args[0]);
 	free_array(tmp);
 	if (!path)

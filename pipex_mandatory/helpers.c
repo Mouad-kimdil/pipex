@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:14:59 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/22 19:50:04 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:56:18 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*check_access(char **path, char *cmd)
 	char	*full_cmd;
 	char	**temp;
 
+	if (!path || !cmd)
+		return (NULL);
 	if (*cmd == '/' || *cmd == '.')
 	{
 		temp = ft_split(cmd, '/');
@@ -67,9 +69,11 @@ void	sub_dup2(int *fds, int fd, int state)
 
 char	*findpath(char **env)
 {
-	while (ft_strncmp("PATH", *env, 4) != 0)
+	if (!env)
+		return (NULL);
+	while (*env && ft_strncmp("PATH", *env, 4))
 		env++;
-	if (*env + 5 == NULL)
+	if (!*env || !(*env + 5))
 		return (NULL);
 	return (*env + 5);
 }
