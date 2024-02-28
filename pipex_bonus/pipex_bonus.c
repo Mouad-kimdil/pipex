@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 18:16:45 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/18 18:03:42 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/28 03:40:51 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int ac, char **av, char **env)
 {
 	t_pipex	pipex;
+	int		state;
 
 	if (ac < check(av, &pipex))
 		err_msg3(pipex);
@@ -34,8 +35,8 @@ int	main(int ac, char **av, char **env)
 			err_msg2("Command ", "''", " not found\n");
 	}
 	close_pipes(&pipex);
-	while (wait(NULL) != -1)
+	while (waitpid(-1, &state, 0) != -1)
 		;
 	free_all(&pipex);
-	exit(EXIT_SUCCESS);
+	exit(WEXITSTATUS(state));
 }

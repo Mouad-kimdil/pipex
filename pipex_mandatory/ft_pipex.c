@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 02:17:50 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/22 06:11:26 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/28 03:42:15 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ static void	child_2(int *fds, char **av, char **env)
 		fatal("command not found");
 	tmp = ft_split(findpath(env), ':');
 	path = check_access(tmp, args[0]);
-	if (!path)
-		err_exit(": command not found\n", args[0], args, 0);
 	free_array(tmp);
 	if (!path)
 		err_exit(": command not found\n", args[0], args, 0);
@@ -62,11 +60,13 @@ static void	child_2(int *fds, char **av, char **env)
 	exit(EXIT_FAILURE);
 }
 
-static void	ft_pipex(char **av, char **env, int *state)
+static void	ft_pipex(char **av, char **env)
 {
 	int	fds[2];
 	int	pid1;
 	int	pid2;
+	int	state;
+
 	if (pipe(fds) == -1)
 		fatal("pipe");
 	pid1 = fork();
@@ -81,20 +81,18 @@ static void	ft_pipex(char **av, char **env, int *state)
 		child_2(fds, av, env);
 	if (close(fds[0]) == -1 || close(fds[1]) == -1)
 		fatal("close");
-	waitpid(pid2, state, 0);
-	exit(*state);
+	waitpid(pid2, &state, 0);
+	waitpid(pid1, &state, 0);
+	exit(WEXITSTATUS(state));
 }
 
 int	main(int ac, char *av[], char **env)
 {
-	int	state;
-
-	if (ac != 5 || !env || !*env)
+	if (ac != 5)
 	{
 		ft_putstr("Usage: ./pipex [infile] [cmd1] [cmd2] [outfile]\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	state = 0;
-	ft_pipex(av, env, &state);
-	exit(state);
+	ft_pipex(av, env);
+	exit(EXIT_SUCCESS);
 }

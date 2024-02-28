@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 18:17:56 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/19 06:24:15 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/28 03:28:07 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 char	*findpath(char **env)
 {
-	while (ft_strncmp("PATH", *env, 4))
+	if (!env)
+		return (NULL);
+	while (*env && ft_strncmp("PATH", *env, 4))
 		env++;
+	if (!*env || !(*env + 5))
+		return (NULL);
 	return (*env + 5);
 }
 

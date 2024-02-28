@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 19:08:25 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/18 18:03:38 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/28 03:29:21 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	intialize_vars(t_pipex *pipex, int ac, char **env)
 	pipex->pipe_nmbs = 2 * (pipex->cmd_nmbs - 1);
 	pipex->pipe = (int *)malloc(sizeof(int) * pipex->pipe_nmbs);
 	pipex->env_path = findpath(env);
+	if (!pipex->env_path)
+		err_msg("path Error\n");
 	pipex->cmd_paths = ft_split(pipex->env_path, ':');
 	pipex->idx = -1;
 }

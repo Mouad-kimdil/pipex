@@ -6,7 +6,7 @@
 /*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 19:14:59 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/02/22 06:00:10 by mkimdil          ###   ########.fr       */
+/*   Updated: 2024/02/22 19:50:04 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	sub_dup2(int *fds, int fd, int state)
 {
 	if (state == 0)
 	{
-		close(fds[0]);
+		if (close(fds[0]) == -1)
+			fatal("close");
 		if (dup2(fd, 0) == -1)
 			fatal("dup 1");
 		if (dup2(fds[1], 1) == -1)
@@ -53,7 +54,8 @@ void	sub_dup2(int *fds, int fd, int state)
 	}
 	else if (state == 1)
 	{
-		close(fds[1]);
+		if (close(fds[1]) == -1)
+			fatal("close");
 		if (dup2(fd, 1) == -1)
 			fatal("dup 3");
 		if (dup2(fds[0], 0) == -1)
@@ -67,5 +69,7 @@ char	*findpath(char **env)
 {
 	while (ft_strncmp("PATH", *env, 4) != 0)
 		env++;
+	if (*env + 5 == NULL)
+		return (NULL);
 	return (*env + 5);
 }
