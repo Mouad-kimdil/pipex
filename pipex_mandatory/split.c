@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aboukdid <aboukdid@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkimdil <mkimdil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:12:48 by mkimdil           #+#    #+#             */
-/*   Updated: 2024/03/01 21:24:05 by aboukdid         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:46:31 by mkimdil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	countword(const char *s, char c)
 		return (0);
 	while (*s)
 	{
-		if (*s != c)
+		if (*s != c && *s != '\t')
 		{
 			if (!in_word)
 			{
@@ -78,10 +78,10 @@ char	**ft_help(const char *s, char c, int len, char **final)
 	i = 0;
 	while (i < len)
 	{
-		while (*s == c)
+		while (*s == c || *s == '\t')
 			s++;
 		start = (char *)s;
-		while (*s && *s != c)
+		while (*s && *s != c && *s != '\t')
 			s++;
 		final[i] = ft_strndup(start, s - start);
 		if (!final[i])
